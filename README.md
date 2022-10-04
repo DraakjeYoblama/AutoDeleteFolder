@@ -28,4 +28,4 @@ If you put the shortcut in the startup folder, make sure the original file isn't
 
 - Get [cmdutils.zip](http://www.maddogsw.com/cmdutils/cmdutils.zip) from [http://www.maddogsw.com/cmdutils/](http://www.maddogsw.com/cmdutils/)
 - Extract recycle.exe from the zip, you don't need the other files
-- move recycle.exe to C:\Windows\System32
+- Move recycle.exe to C:\Windows\System32
