@@ -5,7 +5,7 @@ Batch file to delete contents of a certain folder, located in your user folder (
 ## Should I use recycletemp.bat or cleartemp.bat?
 
 **recycletemp.bat** puts the files from your temporary folder in the recycle bin in a seperate folder marked with the time and date.
-To use this you need to download [recycle.exe](README.md#L27), a small command line tool
+To use this you need to download [recycle.exe](README.md#how-to-get-recycleexe), a small command line tool
 
 **cleartemp.bat** irreversibly deletes your files
 
