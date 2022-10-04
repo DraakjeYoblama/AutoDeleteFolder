@@ -23,4 +23,4 @@ move "%temp%\%recycleName%\%saveFolderName%" "%userprofile%\%tempFolderName%"
 rd %temp% /s /q
 md %temp%
 
-Put this file or a shortcut to it in "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" to run on startup
+::Put this file or a shortcut to it in "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" to run on startup
