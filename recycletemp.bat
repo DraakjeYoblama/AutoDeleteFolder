@@ -24,7 +24,8 @@ recycle "%userprofile%\%tempFolderName%\%recycleName%"
 rd %temp% /s /q
 md %temp%
 
-:: If you want to keep files make a saveme folder in your temporary folder
-
 :: This file needs recycle.exe from cmdutils (http://www.maddogsw.com/cmdutils/) in system32 to run.
 :: If recycle.exe not available: use cleartemp.bat
+
+::Put this file or a shortcut to it in "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" to run on startup
+:: If you want to keep files make a saveme folder in your temporary folder
