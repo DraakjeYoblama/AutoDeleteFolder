@@ -1,13 +1,17 @@
 # AutoDeleteFolder
 
-Batch file to delete contents of a certain folder, located in your user folder (%userprofile%)
+Batch file to delete contents of a certain folder, which is located in your user folder (C:\Users\username)
 
-## Should I use recycletemp.bat or cleartemp.bat?
+## batch file
 
-**recycletemp.bat** puts the files from your temporary folder in the recycle bin in a seperate folder marked with the time and date.
-To use this you need to download [recycle.exe](README.md#how-to-get-recycleexe), a small command line tool
+**recycletemp.bat** puts the files from your temporary folder in the recycle bin, contained in a seperate folder marked with the time and date.
+To use this you need to install [trash-cli](README.md#how-to-get-trashcli), a small command line tool
 
-**cleartemp.bat** irreversibly deletes your files
+if you can't install trash-cli, you can change the start of the file `set removePermanently=1` to remove files permanently instead
+
+You can choose the name of the that gets deleted with `set tempFolderName=Temporary`
+
+You can choose a folder that will be saved from deletion with `set saveFolderName=saveme`
 
 ## If you want to run on startup
 
@@ -26,6 +30,4 @@ If you put the shortcut in the startup folder, make sure the original file isn't
 
 ## How to get recycle.exe
 
-- Get [cmdutils.zip](http://www.maddogsw.com/cmdutils/cmdutils.zip) from [http://www.maddogsw.com/cmdutils/](http://www.maddogsw.com/cmdutils/)
-- Extract recycle.exe from the zip, you don't need the other files
-- Move recycle.exe to C:\Windows\System32
+Get [trash-cli](https://www.npmjs.com/package/trash-cli) from [npm](https://nodejs.org/en) by running `npm install --global trash-cli`

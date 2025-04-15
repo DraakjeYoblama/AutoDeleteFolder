@@ -1,31 +1,37 @@
-:: Set names for temporary folder and the saveme folder (doesn't get deleted)
-set tempFolderName=Tijdelijk
+:: Set name for temporary folder
+set tempFolderName=Temporary
+:: The folder with the name below will not be deleted
 set saveFolderName=saveme
+:: 0 = move to trash, 1 = remove permanently
+set removePermanently=0
+:: end of user input
 
-:: Generate backup folder name
-set timeHour=%TIME: =0%
-set recycleName=%tempFolderName%_%DATE:~8,2%_%DATE:~3,2%_%DATE:~0,2%_%timeHour:~0,2%_%TIME:~3,2%
-
-:: Copy your temporary folder to %temp% with generated name
-move "%userprofile%\%tempFolderName%" "%temp%\%recycleName%"
-
-:: Remake your temporary folder and add ini file and saveme folder
-md "%userprofile%\%tempFolderName%"
-attrib +r "%userprofile%\%tempFolderName%"
-xcopy /H /K "%temp%\%recycleName%\desktop.ini" "%userprofile%\%tempFolderName%"
-move "%temp%\%recycleName%\%saveFolderName%" "%userprofile%\%tempFolderName%"
-
-:: Move folder back from temp to your temporary folder, in case you want to restore it from recycle bin later, before removing it
-move "%temp%\%recycleName%" "%userprofile%\%tempFolderName%\%recycleName%"
-recycle "%userprofile%\%tempFolderName%\%recycleName%"
-
-
-:: Clearing temp folder
-rd %temp% /s /q
-md %temp%
-
-:: This file needs recycle.exe from cmdutils (http://www.maddogsw.com/cmdutils/) in system32 to run.
-:: If recycle.exe not available: use cleartemp.bat
+:: This file needs trash-cli to run: https://www.npmjs.com/package/trash-cli
+:: npm install --global trash-cli
+:: If not available: change this setting to remove the files permanently
 
 ::Put this file or a shortcut to it in "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" to run on startup
-:: If you want to keep files make a saveme folder in your temporary folder
+
+:: Generate backup folder name
+set sanitizedDate=%DATE:/=_%
+set sanitizedTime=%TIME::=_%
+set recycleName=%tempFolderName%_%sanitizedDate:~3,11%_%sanitizedTime:~0,8%
+
+:: Create the subfolder inside tempFolder so when the folder is restored, it will be inside the original
+md "%userprofile%\%tempFolderName%\%recycleName%"
+
+:: Move all files and folders except saveme and desktop.ini to the subfolder
+for /f "delims=" %%F in ('dir /b /a-d "%userprofile%\%tempFolderName%"') do (
+    if /i not "%%F"=="desktop.ini" move "%userprofile%\%tempFolderName%\%%F" "%userprofile%\%tempFolderName%\%recycleName%"
+)
+for /f "delims=" %%D in ('dir /b /ad "%userprofile%\%tempFolderName%"') do (
+    if /i not "%%D"=="%saveFolderName%" move "%userprofile%\%tempFolderName%\%%D" "%userprofile%\%tempFolderName%\%recycleName%"
+)
+
+if "%removePermanently%"=="1" (
+    :: permanently delete folder
+    rd "%userprofile%\%tempFolderName%\%recycleName%" /s /q
+) else (
+    :: move folder to trash
+    trash "%userprofile%\%tempFolderName%\%recycleName%"
+)
